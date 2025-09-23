@@ -22,7 +22,7 @@ cd generate-password-offline/src
 - run the follow command
 
 ```
-javac Main.class
+javac Main.java
 ```
 
 ## Generate jar file
