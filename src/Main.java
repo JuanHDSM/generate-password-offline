@@ -1,6 +1,15 @@
-import javax.swing.*;
-import java.awt.*;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.security.SecureRandom;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,34 +17,50 @@ public class Main {
         JFrame miJFrame = new JFrame("Exemplo - Java Swing");
         miJFrame.setSize(500, 300);
         JPanel miJPanel = new JPanel();
+        JPanel miJPanel2 = new JPanel();
         miJPanel.setSize(300, 400);
+        miJPanel2.setSize(300, 20);
 
-        miJPanel.setLayout(new GridBagLayout());
+        miJPanel2.setLayout(new GridBagLayout());
+        miJPanel.setLayout(new FlowLayout());
 
         JLabel miJLabel = new JLabel();
+        JLabel miJLabel2 = new JLabel();
 
-        JTextArea miJTextArea = new JTextArea(1,5);
+        JTextArea miJTextArea = new JTextArea(1, 5);
 
         JButton bt = new JButton("Gerar");
 
-//        miJPanel.add(miJTextArea);
-        miJPanel.add(bt);
-        miJPanel.add(Box.createHorizontalStrut(10));
+        //        miJPanel.add(miJTextArea);
+        miJPanel2.add(bt);
+        miJPanel2.add(Box.createHorizontalStrut(10));
         miJPanel.add(miJLabel);
-
+        miJPanel2.add(miJLabel2);
 
         bt.addActionListener(e -> {
-                    miJLabel.setText("Senha: " + generatePassword(args));
+            String senha = generatePassword(args);
+            miJLabel.setText("Senha: " + senha);
+            miJLabel2.setText("Senha cópiada");
+            textCopy(senha);
 
-                    miJPanel.add(miJLabel);
-                    miJFrame.add(miJPanel);
-                }
-        );
+            miJPanel.add(miJLabel);
+            miJFrame.add(miJPanel);
+        });
         miJLabel.setText("Senha: ");
+        miJLabel2.setText("Sen222ha: ");
 
         miJFrame.add(miJPanel);
+        miJFrame.add(miJPanel2);
 
         miJFrame.setVisible(true);
+    }
+
+    static void textCopy(String pass) {
+        Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        StringSelection selection = new StringSelection(pass);
+
+        cb.setContents(selection, null);
     }
 
     static String generatePassword(String[] args) {
