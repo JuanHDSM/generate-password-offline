@@ -8,10 +8,10 @@ import java.security.SecureRandom;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JCheckBox;
 
 
 public class Main {
@@ -41,7 +41,7 @@ public class Main {
         // checkBox
         JCheckBox maiusculosBox = new JCheckBox("LETRAS MAIUSCULAS",true);
         JCheckBox minusculobox = new JCheckBox("LETRAS MINUSCULAS", true);
-        JCheckBox numerosBox = new JCheckBox("NÚMEROS",false);
+        JCheckBox numerosBox = new JCheckBox("NÚMEROS", true);
         JCheckBox caracterBox = new JCheckBox("CARACTERES",true);
 
         
