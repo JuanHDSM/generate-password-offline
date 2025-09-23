@@ -25,6 +25,12 @@ cd generate-password-offline/src
 javac Main.java
 ```
 
+## Create Manifest
+```
+ echo "Main-Class: Main" > Manifest.txt
+ echo "" >> Manifest.txt
+```
+
 ## Generate jar file
 
 -  run the follow command:
@@ -36,5 +42,5 @@ jar cfm Main.jar Manifest.txt Main.class
 ## Run jar file
 
 ```
-java -jar Main.jar <size-of-passoword>
+java -jar Main.jar <size-of-passoword-or-empty>
 ```
