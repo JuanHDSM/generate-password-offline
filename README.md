@@ -14,16 +14,10 @@ git clone https://github.com/JuanHDSM/generate-password-offline.git
 
 - go to directory:
 ```
-cd generate-password-offline
+cd generate-password-offline/src
 ```
 
 ## Compile Class
-
-- go to src directory
-
- ```
- cd ./src
- ```
 
 - run the follow command
 
