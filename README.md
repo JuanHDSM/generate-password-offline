@@ -22,7 +22,7 @@ cd generate-password-offline
 - go to src directory
 
  ```
- cd src
+ cd ./src
  ```
 
 - run the follow command
