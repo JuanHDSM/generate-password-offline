@@ -1,6 +1,7 @@
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.TextArea;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -12,6 +13,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 
 public class Main {
@@ -30,6 +33,7 @@ public class Main {
         // Labels
         JLabel textCopiedLabel = new JLabel();
         JLabel passLabel = new JLabel();
+        JLabel tamanhoJLabel = new JLabel("Tamanho da Senha Aqui: ");
 
         // Layout
         BoxLayout boxLayout = new BoxLayout(passPanel, BoxLayout.Y_AXIS);
@@ -44,21 +48,25 @@ public class Main {
         JCheckBox numerosBox = new JCheckBox("NÚMEROS", true);
         JCheckBox caracterBox = new JCheckBox("CARACTERES",true);
 
-        
+        JTextField tamanhos = new JTextField("16");
 
         mainPanel.setLayout(gridBagLayout);
         passPanel.setLayout(boxLayout);
+
         passPanel.add(marginTopBottom());
         passPanel.add(passLabel);
         passPanel.add(marginTopBottom());
-        passPanel.add(bt);
+        passPanel.add(tamanhoJLabel);
+        passPanel.add(tamanhos);
         passPanel.add(marginTopBottom());
         passPanel.add(textCopiedLabel);
         passPanel.add(maiusculosBox);
         passPanel.add(minusculobox);
         passPanel.add(numerosBox);
         passPanel.add(caracterBox);
-
+        passPanel.add(bt);
+        
+    
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -66,7 +74,8 @@ public class Main {
         mainPanel.add(passPanel, gbc);
     
         bt.addActionListener(e -> {
-            String senha = generatePassword(args, numerosBox.isSelected(), maiusculosBox.isSelected(), maiusculosBox.isSelected(), caracterBox.isSelected());
+            int tamanho = Integer.parseInt(tamanhos.getText().trim());
+            String senha = generatePassword(tamanho, numerosBox.isSelected(), minusculobox.isSelected(), maiusculosBox.isSelected(), caracterBox.isSelected());
             passLabel.setText("Senha: " + senha);
             textCopiedLabel.setText("\nSenha cópiada");
             copyPass(senha);
@@ -91,14 +100,14 @@ public class Main {
         cb.setContents(selection, null);
     }
 
-    static String generatePassword(String[] args, boolean numeros, boolean minusculo, boolean maiusculo, boolean caracteres ) {
+    static String generatePassword(int tamanho , boolean numeros, boolean minusculo, boolean maiusculo, boolean caracteres ) {
 
         SecureRandom senha = new SecureRandom();
         StringBuilder sb = new StringBuilder();
 
         byte random8 = (byte) senha.nextInt(8);
         try {
-            for (int a = 0; a < Integer.parseInt(args[0]); a++) {
+            for (int a = 0; a < tamanho; a++) {
                 sb.append(digitos(((byte) senha.nextInt(87)), numeros, maiusculo, minusculo, caracteres));
                 if (a % (7 + random8) == 0) {
                     random8 = (byte) senha.nextInt(8);
