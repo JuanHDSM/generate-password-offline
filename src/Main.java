@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,17 +14,26 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+import javax.swing.SpinnerNumberModel;
 
 public class Main {
     public static void main(String[] args) {
 
         // Frames
-        JFrame miJFrame = new JFrame("Exemplo - Java Swing");
+        JFrame miJFrame = new JFrame("PasswordGenerator");
         miJFrame.setSize(500, 300);
         miJFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Definir ícone personalizado da aplicação
+        try {
+            java.awt.Image icon = java.awt.Toolkit.getDefaultToolkit().getImage("generate-password-offline\\src\\imagem\\keyy_icon.png");
+            miJFrame.setIconImage(icon);
+        } catch (Exception ex) {
+            System.out.println("Ícone não encontrado, usando padrão");
+        }
         
         // Panels
         JPanel mainPanel = new JPanel();
@@ -32,6 +42,7 @@ public class Main {
 
         // Labels
         JLabel textCopiedLabel = new JLabel();
+        JLabel textoFixoLabel = new JLabel("");
         JLabel passLabel = new JLabel();
         JLabel tamanhoJLabel = new JLabel("Tamanho da Senha Aqui: ");
 
@@ -48,16 +59,16 @@ public class Main {
         JCheckBox numerosBox = new JCheckBox("NÚMEROS", true);
         JCheckBox caracterBox = new JCheckBox("CARACTERES",true);
 
-        JTextField tamanhos = new JTextField("16");
+        // JSpinner substituindo JTextField
+        JSpinner tamanhosenha = new JSpinner(new SpinnerNumberModel(16, 1, 60, 1));
 
         mainPanel.setLayout(gridBagLayout);
         passPanel.setLayout(boxLayout);
-
+        passPanel.add(textoFixoLabel);
         passPanel.add(marginTopBottom());
-        passPanel.add(passLabel);
         passPanel.add(marginTopBottom());
         passPanel.add(tamanhoJLabel);
-        passPanel.add(tamanhos);
+        passPanel.add(tamanhosenha);
         passPanel.add(marginTopBottom());
         passPanel.add(textCopiedLabel);
         passPanel.add(maiusculosBox);
@@ -66,7 +77,6 @@ public class Main {
         passPanel.add(caracterBox);
         passPanel.add(bt);
         
-    
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -74,9 +84,10 @@ public class Main {
         mainPanel.add(passPanel, gbc);
     
         bt.addActionListener(e -> {
-            int tamanho = Integer.parseInt(tamanhos.getText().trim());
+            int tamanho = (Integer)tamanhosenha.getValue();
+            
             String senha = generatePassword(tamanho, numerosBox.isSelected(), minusculobox.isSelected(), maiusculosBox.isSelected(), caracterBox.isSelected());
-            passLabel.setText("Senha: " + senha);
+            textoFixoLabel.setText("<html>Senha Gerada: <font color='green'>" + senha + "</font></html>");
             textCopiedLabel.setText("\nSenha cópiada");
             copyPass(senha);
 
